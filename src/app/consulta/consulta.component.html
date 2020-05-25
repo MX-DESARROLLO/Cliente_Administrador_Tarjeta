@@ -1,0 +1,108 @@
+
+  
+ 
+  <nav class="navbar navbar-light bg-success">
+    <h1 id="titulo" class="text-center">Tarjeta de Operación Linea Existente</h1>
+  </nav>
+  <div class="container p-8">
+    
+   
+   <br>
+   
+   <div class="row">
+     
+     <div class="col-md-1">
+
+     </div>
+     <div class="col-md-10">
+         <div *ngFor="let valor of clima; first as isFirst">
+           <h6 class="text-muted" *ngIf="isFirst">Consulta Placa: <strong style="font-size: 150%;">{{valor.PLACA}}</strong></h6>
+           <h6 class="text-muted" *ngIf="isFirst">Tarjeta: <strong style="font-size: 150%;">{{tarjeta}}</strong></h6>
+         </div>
+
+
+         
+          <div *ngFor="let valor of final" >
+            <ng-container *ngIf="valor.nombre === 'RODAJE';else second">
+
+              
+          <!--Consulta Rodajes-->
+          <div *ngFor="let item of clima">
+            <div *ngIf="item.TIPO == 'RODAJE' ; else elseBlockes">
+              <div id="sombra" class="card card-body border-success mb-3">
+                <h4 id="subtitulo" style="text-align: center;">Rodaje</h4>
+                <img id="img_rodaje" src="./assets/bus.png" class="card-img-top" alt="...">
+                <div class="table-responsive-sm">
+                  <br>
+                  <table class="table table-sm text-center">
+                    <tr>
+                      <th>Codigo</th>
+                      <th>Direccion</th>
+                      <th>Total</th>
+                    </tr>
+                    <tr *ngFor="let item of clima">
+                      <td *ngIf="item.TIPO=='RODAJE'">{{item.CODIGO}}</td>
+                      <td *ngIf="item.TIPO=='RODAJE'">{{item.DIRECCION}}</td>
+                      <td *ngIf="item.TIPO=='RODAJE'" style="width: 80px;">Q. {{item.TOTAL}}</td>
+                    </tr>
+                  </table>  
+                </div>
+              </div>
+            </div>
+        </div>
+        <ng-template #elseBlockes></ng-template>
+
+
+            </ng-container>
+            <ng-template #second>
+                <ng-container *ngIf="valor.nombre === 'REMISIONES';else third">
+                  
+         <!--Consulta de Remisiones-->
+         <div *ngFor="let item of clima ; first as unicos">
+          <div *ngIf="unicos">
+             <div *ngIf="item.TIPO=='REMISIONES' ; else elseBlock">
+               <div id="sombra" class="card card-body border-success mb-3">
+                 <h4 id="subtitulo" class="text-center">Remisiones</h4>
+                 <img id="img_remision" src="./assets/poli.png" class="card-img-top" alt="...">
+                 <div class="table-responsive-sm text-center">
+                   <br>
+                   <table class="table table-sm">
+                     <tr>
+                       <th>Remisiones:</th>
+                       <!--<th>Lugar Infracción:</th>-->
+                       <th>Fecha:</th>
+                       <th>Sub Total:</th>
+                     </tr>
+                     <tr *ngFor="let item of clima">
+                       <td *ngIf="item.TIPO=='REMISIONES'">{{item.SERIE + item.CODIGO}}</td>
+                       <!--<td *ngIf="item.TIPO=='REMISIONES'">{{item.DIRECCION}}</td>-->
+                       <td *ngIf="item.TIPO=='REMISIONES'">{{item.FECHA | date:'dd/MM/yyyy'}} {{item.HORA | date: 'HH:mm:ss'}}</td>
+                       <td *ngIf="item.TIPO=='REMISIONES'" style="width: 80px;">Q. {{item.TOTAL}}</td>
+                     </tr>
+                   </table> 
+                 </div> 
+               </div>
+             </div>    
+           </div>
+         </div>
+         
+         <ng-template #elseBlock></ng-template>
+
+                </ng-container>
+            </ng-template>
+            
+            <ng-template #third>
+              <br>
+              <br>
+              <br>
+              <img id="img_remision" src="./assets/poli.png" class="card-img-top" alt="...">
+              <h1 class="text-center">Felicidades Usted esta Solvente!! no debe {{ valor.nombre }}</h1>
+            </ng-template>
+          </div>  
+     </div>
+   </div>
+ </div>
+ 
+ 
+
+<router-outlet></router-outlet>
